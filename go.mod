@@ -3,6 +3,7 @@ module github.com/SimeonAleksov/socket-service
 go 1.16
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/georgysavva/scany v0.2.8
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
 	github.com/gorilla/websocket v1.4.2
