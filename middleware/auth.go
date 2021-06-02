@@ -13,7 +13,7 @@ func GetUser(tokenString string) int {
   if err != nil {
     fmt.Println(err)
   }
-  userId := claims["user_id"]
-  fmt.Println(userId)
-  return 000
+  userId := claims["user_id"].(float64)
+  returnVal := int(userId)
+  return returnVal
 }
