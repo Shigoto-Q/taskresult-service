@@ -1,7 +1,7 @@
 package middleware
 
 import (
-  "fmt"
+  "log"
   "github.com/dgrijalva/jwt-go"
 )
 
@@ -11,7 +11,7 @@ func GetUser(tokenString string) int {
           return []byte("<YOUR VERIFICATION KEY>"), nil
         })
   if err != nil {
-    fmt.Println(err)
+    log.Println(err)
   }
   userId := claims["user_id"].(float64)
   returnVal := int(userId)

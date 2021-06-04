@@ -25,10 +25,6 @@ type TaskResult struct {
 }
 
 
-func FormatQuery(userid int) string {
-  return fmt.Sprintf(Query, userid)
-}
-
 func SetupDb() *sqlx.DB {
     db, err := sqlx.Connect("postgres", "user=debug password=debug dbname=shigoto_q sslmode=disable")
     if err != nil {
@@ -38,18 +34,11 @@ func SetupDb() *sqlx.DB {
 }
 
 
-func FetchResults(userID int, db *sqlx.DB) TaskResult {
-  rows, err := db.Queryx(fmt.Sprintf(Query, userID))
+func FetchResults(userID int, db *sqlx.DB) *[]TaskResult {
+  taskresult := []TaskResult{}
+  err := db.Select(&taskresult, fmt.Sprintf(Query, userID))
   if err != nil {
-    log.Fatalln(err)
-  }
-  taskresult := TaskResult{}
-  for rows.Next() {
-    err := rows.StructScan(&taskresult)
-    if err != nil {
       log.Fatalln(err)
     }
-    fmt.Printf("%#v\n", taskresult)
-  } 
-  return taskresult
+  return &taskresult
 }
