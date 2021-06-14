@@ -8,7 +8,7 @@ import (
 func GetUser(tokenString string) int {
   claims := jwt.MapClaims{}
   _, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error)        {
-          return []byte("<YOUR VERIFICATION KEY>"), nil
+          return []byte(""), nil
         })
   if err != nil {
     log.Println(err)
