@@ -1,24 +1,19 @@
 package ws
 
 import (
-	"net/http"
-	"regexp"
-	"strings"
-	"time"
+    "net/http"
+    "regexp"
+    "strings"
+    "time"
     "log"
-	"golang.org/x/net/websocket"
+    "golang.org/x/net/websocket"
     "github.com/SimeonAleksov/socket-service/config"
     "github.com/SimeonAleksov/socket-service/middleware"
 )
 
-type Message struct {
-	Id      int    `json:"id,omitempty"`
-	Message string `json:"message,omitempty"`
-}
 
 var token string
 var user_id int
-// Heavily based on Kubernetes' (https://github.com/GoogleCloudPlatform/kubernetes) detection code.
 var connectionUpgradeRegex = regexp.MustCompile("(^|.*,\\s*)upgrade($|\\s*,)")
 var db = config.SetupDb()
 
@@ -30,12 +25,12 @@ func isWebsocketRequest(req *http.Request) bool {
 
 func Handle(w http.ResponseWriter, r *http.Request) {
     if isWebsocketRequest(r) {
-		websocket.Handler(HandleWebSockets).ServeHTTP(w, r)
-	}
-	log.Println("Finished sending response...")
+        websocket.Handler(handleWebSockets).ServeHTTP(w, r)
+    }
+    log.Println("Finished sending response...")
 }
 
-func HandleWebSockets(ws *websocket.Conn) {
+func handleWebSockets(ws *websocket.Conn) {
   for {
     results := config.FetchResults(user_id, db)
     err := websocket.JSON.Send(ws, results)
