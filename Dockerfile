@@ -8,7 +8,7 @@ ENV GO11MODULE=on \
 
 WORKDIR $BASE_PATH
 
-COPY . .
+COPY . ./app
 
 RUN go mod download
 RUN go build -o main .
@@ -20,6 +20,6 @@ ENV BASE_PATH=/go/src/app
 
 COPY --from=build $BASE_PATH/main /app/main
 
-EXPOSE 5000
+EXPOSE 8080
 
 ENTRYPOINT ["/app/main"]

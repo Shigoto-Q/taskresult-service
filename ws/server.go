@@ -30,6 +30,24 @@ func Handle(w http.ResponseWriter, r *http.Request) {
     log.Println("Finished sending response...")
 }
 
+func HandleStatus(w http.ResponseWriter, r *http.Request) {
+  if isWebsocketRequest(r) {
+      websocket.Handler(handleTaskStatus).ServeHTTP(w, r)
+    }
+  log.Println("Finished sending response...")
+}
+
+func handleTaskStatus(ws *websocket.Conn) {
+  for {
+    stats := config.FetchResultStatus(user_id, db)
+    err := websocket.JSON.Send(ws, stats)
+    if err != nil {
+        return
+    }
+    time.Sleep(time.Second) 
+  }
+}
+
 func handleWebSockets(ws *websocket.Conn) {
   for {
     results := config.FetchResults(user_id, db)
