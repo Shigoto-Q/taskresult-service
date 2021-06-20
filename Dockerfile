@@ -8,7 +8,7 @@ ENV GO11MODULE=on \
 
 WORKDIR $BASE_PATH
 
-COPY . ./app
+COPY . ./
 
 RUN go mod download
 RUN go build -o main .
