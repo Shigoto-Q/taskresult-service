@@ -6,20 +6,12 @@ ENV GO11MODULE=on \
     GOARCH=amd64 \
     BASE_PATH=/go/src/app
 
-WORKDIR $BASE_PATH
+WORKDIR /app
 
-COPY . ./
-
+COPY go.mod go.sum ./
 RUN go mod download
+COPY . .
 RUN go build -o main .
 
-
-FROM scratch as run
-
-ENV BASE_PATH=/go/src/app
-
-COPY --from=build $BASE_PATH/main /app/main
-
 EXPOSE 8080
-
-ENTRYPOINT ["/app/main"]
+CMD ["./main"]

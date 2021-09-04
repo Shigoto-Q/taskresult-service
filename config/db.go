@@ -34,8 +34,20 @@ type TaskStatus struct {
   Pending int
 }
 
+const (
+  host     = "postgres"
+  port     = 5432
+  user     = "debug"
+  password = "debug"
+  dbname   = "shigoto_q"
+)
 func SetupDb() *sqlx.DB {
-    db, err := sqlx.Connect("postgres", "user=debug password=debug dbname=shigoto_q sslmode=disable")
+    //db, err := sqlx.Connect("postgres", "hostname=postgres user=debug password=debug dbname=shigoto_q sslmode=disable")
+  psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+    "password=%s dbname=%s sslmode=disable",
+    host, port, user, password, dbname)
+
+    db, err := sqlx.Connect("postgres", psqlInfo)
     if err != nil {
         log.Fatalln(err)
     }
