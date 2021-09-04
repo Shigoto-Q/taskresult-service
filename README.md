@@ -2,6 +2,6 @@
 
 
 ```sh
-$ docker build -t -t websocket-service .
+$ docker build -t websocket-service .
 $ docker run -it -p 5000:5000 websocket-service
 ```
