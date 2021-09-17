@@ -3,7 +3,6 @@ package config
 import (
   "fmt"
   "log"
-  // "github.com/georgysavva/scany/pgxscan"
   "github.com/jmoiron/sqlx"
   _ "github.com/lib/pq"
 )
@@ -42,7 +41,6 @@ const (
   dbname   = "shigoto_q"
 )
 func SetupDb() *sqlx.DB {
-    //db, err := sqlx.Connect("postgres", "hostname=postgres user=debug password=debug dbname=shigoto_q sslmode=disable")
   psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=disable",
     host, port, user, password, dbname)
